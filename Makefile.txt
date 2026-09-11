@@ -1,0 +1,22 @@
+PORT=XXXX
+FLAGS= -DPORT=${PORT} -g -Wall -Wextra
+
+all: main client
+
+main: main.o board.o board.h 
+	gcc ${FLAGS} -o $@ $^
+
+main.o: main.c player.h 
+	gcc ${FLAGS} -c main.c -o main.o
+
+board.o: board.c board.h
+	gcc ${FLAGS} -c board.c -o board.o
+
+client: client.o board.o board.h 
+	gcc ${FLAGS} -o $@ $^
+
+client.o: client.c player.h board.c
+	gcc ${FLAGS} -c client.c -o client.o
+
+clean:
+	rm *.o client main
